@@ -1,5 +1,16 @@
 # Production Log
 
+## 2026-06-12 Update 3
+
+- Added curriculum-section actions in the top-right of `第一版課綱草案`:
+  - `複製兩天課綱`
+  - `下載 Word`
+- Added `shilin-familyfin-two-day-course-outline-v0.1.docx` as the Word download file for the two-session outline.
+- The copy/download content is limited to the two-day curriculum: title, course goal, Day 1 schedule, and Day 2 schedule.
+- DOCX structural check passed: 2 tables, 7 rows for Day 1 table including header, 8 rows for Day 2 table including header.
+- Render-to-PNG visual QA could not run because LibreOffice/soffice was unavailable in this environment; structural DOCX checks were used instead.
+- Search posture preserved: HTML meta robots, `robots.txt`, and Vercel `X-Robots-Tag` should remain noindex for review-stage sharing.
+
 ## 2026-06-12 Update 2
 
 - Swapped `時間盤點工具` with `知識庫、問問 AI 與社工儀表板` in the two-session outline.

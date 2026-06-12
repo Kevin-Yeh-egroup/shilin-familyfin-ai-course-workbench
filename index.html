@@ -204,6 +204,9 @@
     }
 
     .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       min-height: 40px;
       padding: 8px 12px;
       border: 1px solid var(--line);
@@ -212,6 +215,8 @@
       color: var(--ink);
       cursor: pointer;
       font-weight: 800;
+      text-align: center;
+      text-decoration: none;
       box-shadow: 0 2px 8px rgba(24, 38, 33, 0.05);
       overflow-wrap: anywhere;
       white-space: normal;
@@ -772,6 +777,10 @@
           <div>
             <h3>第一版課綱草案</h3>
             <p>依照先前課綱建議的格式，整理為兩堂課，每堂約 3 小時。第一天先建立紀錄與時間管理基礎，第二天把工作流與資源查找接起來。</p>
+          </div>
+          <div class="actions" aria-label="課綱操作">
+            <button class="button primary" type="button" id="copyCurriculum">複製兩天課綱</button>
+            <a class="button" href="shilin-familyfin-two-day-course-outline-v0.1.docx" download="士林地檢署心理師-好理家在兩天課綱-v0.1.docx">下載 Word</a>
           </div>
         </div>
         <div class="band">
@@ -1416,12 +1425,78 @@
 7. 資料安全規範：不可輸入資料、去識別化標準、審核人。
 8. 課後小試行基準：目前花費時間、用藥/回診提醒漏項、服務追蹤重工與交接困難。`;
 
+    const curriculumText = `士林地檢署心理師｜好理家在 AI 資訊化課程兩天課綱 v0.1
+
+課程目標：
+讓夥伴能用好理家在完成一段安全示範：先把語音或文字資料整理成可讀紀錄，再放入個案歷程脈絡，接著用時間盤點工具整理用藥、回診與服務追蹤節點。第二天則把個案歷程紀要延伸成工作流，再用知識庫、問問 AI 與社工儀表板查找可審稿的支持資源，並認識免費財務諮詢與急難專區的使用邊界。
+
+第一堂：紀錄與時間管理基礎
+00:00-00:20｜開場與需求對焦
+回到夥伴提出的五項需求，先確認第一天聚焦「紀錄變文字、文字進歷程、時間可盤點」三件事。
+器材/工具：PPT、工作台、需求卡
+
+00:20-01:00｜語音轉文字
+先示範手機如何錄音、錄完後在錄音 App 或檔案 App 找到音檔，再用模擬錄音、逐字稿或文件整理成摘要、重點、待辦與待確認事項；討論錄音保存與去識別化習慣。
+器材/工具：手機錄音 App、手機檔案 App、好理家在語音轉文字、模擬逐字稿、去識別化規則卡
+
+01:00-01:35｜個案歷程紀要
+把剛剛整理出的文字放入歷程脈絡，練習區分事件、處遇、觀察、待確認與下一步，不把工具輸出直接當正式紀錄。
+器材/工具：社工專區個案歷程紀要、模擬紀錄、欄位對照表
+
+01:35-01:45｜休息
+整理第一段示範中可用、需審核、暫不做的地方。
+
+01:45-02:35｜時間盤點工具
+使用課程時已上線的時間盤點工具，整理一週工作時間、回診/用藥提醒節點、服務追蹤等待與交接時間，找出最適合導入工具協助的工作段落。
+器材/工具：時間盤點工具、時間盤點範例表、服務追蹤節點清單
+
+02:35-03:00｜第一堂整理與練習任務
+讓夥伴選一段低風險、可去識別化的模擬資料，決定第二堂要用它設計個案歷程紀要與服務追蹤工作流。
+器材/工具：課後練習單、兩週小試行紀錄表
+
+第二堂：工作流與資源入口
+00:00-00:20｜回顧與工作流目標
+回顧第一堂的三組工具，確認第二堂要把個案歷程紀要、資源查找與諮詢/急難入口串成一段可試行流程。
+器材/工具：第一堂摘要、流程圖
+
+00:20-01:05｜個案歷程紀要工作流
+拆解輸入、整理、人工審核、回到正式紀錄的流程，標註哪些欄位可由好理家在協助，哪些必須由心理師判斷。
+器材/工具：流程圖、欄位清單、模擬紀錄
+
+01:05-01:35｜知識庫、問問 AI 與社工儀表板
+用概括問題查找資源與說明文字，練習把工具輸出改成可審稿草稿，並標註哪些內容需要人工查核。
+器材/工具：社工儀表板、知識庫、問問 AI、審稿清單
+
+01:35-01:45｜休息
+把資源查找結果整理成「可作草稿」與「需要人工查核」兩類。
+
+01:45-02:20｜免費財務諮詢
+導覽好理家在免費財務諮詢入口，說明適用情境、資料準備、告知同意與不代填送出的原則。
+器材/工具：好理家在線上諮詢、資料需求清單
+
+02:20-02:45｜急難專區
+導覽急難救助與相關申請入口，只看流程、欄位類型與需要確認的資料，不用真實個案示範送出。
+器材/工具：好理家在急難專區、紅黃綠燈表
+
+02:45-03:00｜兩週小試行設計
+完成試行紀錄表：選定一段工作流、列出使用工具、輸入材料類型、人工修正、安全疑慮與回饋方式。
+器材/工具：兩週小試行紀錄表、回饋表`;
+
     document.getElementById("copyChecklist").addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(checklistText);
         alert("已複製課前材料清單。");
       } catch (error) {
         document.getElementById("summaryOutput").value = checklistText;
+      }
+    });
+
+    document.getElementById("copyCurriculum").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(curriculumText);
+        alert("已複製兩天課綱。");
+      } catch (error) {
+        document.getElementById("summaryOutput").value = curriculumText;
       }
     });
 
