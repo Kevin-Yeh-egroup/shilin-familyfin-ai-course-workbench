@@ -1,5 +1,18 @@
 # Production Log
 
+## 2026-06-13 Wenshan Course Retarget
+
+- Retargeted the course package from the earlier Shilin District Prosecutors Office context to 文山職能工作坊 after partner feedback and public-source review.
+- Split the artifact into two pages:
+  - `index.html`: invite-unit course outline with purpose, target audience, unit benefits, two-session schedule, and FamilyFin support.
+  - `design-notes.html`: internal preparation notes with source grounding, tool mapping, demo flow, and data still needed from the unit.
+- Removed the standalone safety-boundary/preparation section from the invite-facing outline and removed signoff/supervisor wording from the visible course page.
+- Added a Word-link fallback button because the Codex in-app browser does not support file downloads.
+- Added Wenshan-specific Markdown and Word outputs:
+  - `wenshan-course-outline-v0.2.md`
+  - `wenshan-familyfin-two-day-course-outline-v0.2.docx`
+- Production redeploy requested by Kevin after local review.
+
 ## 2026-06-12 Update 5
 
 - Follow-up: revised Day 2 after Kevin clarified that the class should not position or design a psychology self-check. The session now centers on how 士林地檢署夥伴 can accompany cases to use existing FamilyFin assessments as interaction material.
