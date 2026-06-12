@@ -1,11 +1,24 @@
 # Production Log
 
+## 2026-06-12 Update 5
+
+- Follow-up: revised Day 2 after Kevin clarified that the class should not position or design a psychology self-check. The session now centers on how 士林地檢署夥伴 can accompany cases to use existing FamilyFin assessments as interaction material.
+- Revised Day 2 across HTML, copy output, Markdown outline, and Word download:
+  - 檢測互動 with cases: use existing FamilyFin assessments for awareness, discussion, and human follow-up, not diagnosis.
+  - 知識庫投稿與心理知識擴充: explain that FamilyFin has a knowledge base, encourage psychology-related submissions, and connect submissions to future AI answer quality.
+  - 免費線上財務諮詢與急難專區: present these as resource links for both cases and helping professionals; class only explains entrance, needed information, consent, and boundaries.
+- Updated Day 1 handoff wording so low-risk de-identified material is brought into Day 2's assessment interaction and resource-linking discussion.
+- Regenerated `shilin-familyfin-two-day-course-outline-v0.1.docx`; structural DOCX check passed with 2 tables, row counts `[7, 8]`.
+- Render-to-PNG visual QA still could not run because LibreOffice/soffice is unavailable in this environment; structural DOCX checks were used instead.
+- Local human-like browser check passed through a temporary localhost preview: revised text present, old Day 2 wording absent, copy-curriculum button copied the new outline, Word link existed, mobile 390px had no horizontal overflow, and console errors were 0.
+- Search posture preserved: HTML meta robots, `robots.txt`, and Vercel `X-Robots-Tag` remain noindex for review-stage sharing.
+
 ## 2026-06-12 Update 4
 
 - Follow-up: clarified that 時間資源盤點 can help identify where 用藥追蹤 and 服務追蹤 might connect to future workflow design, while not presenting medication reminders, service tracking, or automatic notifications as current tool features.
 - Revised the course outline after Kevin's clarification:
   - Day 1 keeps 手機錄音、語音轉文字、個案歷程紀要、時間資源盤點、知識庫 / 問問 AI / 社工儀表板.
-  - Day 2 now focuses on 既有自我檢測, 自我檢測結果讀法, 心理相關自我檢測共創可能, and resource connection.
+  - Day 2's earlier assessment-focused wording was superseded by Update 5, which reframes the session around case interaction, knowledge submission, and resource connection.
 - Removed the unused quick-screen course segment from the page, copy output, Markdown outline, and Word download because it is not part of this course version.
 - Revised 時間資源盤點 wording to only describe confirmed behavior from the referenced tool: 新增一段時間, 日期/時段, 活動內容, 今日 24 小時盤點, 已記錄時數, 可補充時間, 最近紀錄.
 - Regenerated `shilin-familyfin-two-day-course-outline-v0.1.docx`; structural DOCX check passed with 2 tables, row counts `[7, 8]`.
