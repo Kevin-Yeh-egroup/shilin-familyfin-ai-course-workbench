@@ -1,5 +1,15 @@
 # Production Log
 
+## 2026-06-12 Update
+
+- Removed the course-boundary paragraph Kevin asked to delete from the teaching page.
+- Moved `第一版課綱草案` between `課程主軸` and `從需求選工具`.
+- Revised the two-session outline:
+  - Day 1: 語音轉文字、個案歷程紀要、知識庫、問問 AI 與社工儀表板。
+  - Day 2: 個案歷程紀要工作流、時間盤點工具概念、免費財務諮詢、急難專區。
+- Synced `course-outline-v0.1.md` with the same two-session structure.
+- Search posture preserved: HTML meta robots, `robots.txt`, and Vercel `X-Robots-Tag` should remain noindex for review-stage sharing.
+
 ## 2026-06-12
 
 - Artifact: 士林地檢署心理師好理家在 AI 課程工作台
