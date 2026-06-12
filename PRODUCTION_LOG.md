@@ -2,6 +2,7 @@
 
 ## 2026-06-12 Update 4
 
+- Follow-up: clarified that 時間資源盤點 can help identify where 用藥追蹤 and 服務追蹤 might connect to future workflow design, while not presenting medication reminders, service tracking, or automatic notifications as current tool features.
 - Revised the course outline after Kevin's clarification:
   - Day 1 keeps 手機錄音、語音轉文字、個案歷程紀要、時間資源盤點、知識庫 / 問問 AI / 社工儀表板.
   - Day 2 now focuses on 既有自我檢測, 自我檢測結果讀法, 心理相關自我檢測共創可能, and resource connection.
