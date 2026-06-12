@@ -1,0 +1,1480 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>工作台 V0.1 - 好理家在課程引導</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8f5;
+      --panel: #ffffff;
+      --ink: #1d2724;
+      --muted: #5f6d68;
+      --line: #d9e0dc;
+      --green: #167263;
+      --green-soft: #e4f2ed;
+      --blue: #2d5f91;
+      --blue-soft: #e7eef8;
+      --amber: #a25d16;
+      --amber-soft: #f8ead9;
+      --red: #a53b36;
+      --red-soft: #f6e3e1;
+      --purple: #6d5687;
+      --purple-soft: #ece6f2;
+      --shadow: 0 12px 30px rgba(24, 38, 33, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    button,
+    textarea,
+    input {
+      font: inherit;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      min-width: 0;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 24px 18px;
+      border-right: 1px solid var(--line);
+      background: #eef3ef;
+      overflow-y: auto;
+      min-width: 0;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .brand {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .brand small {
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    nav {
+      display: grid;
+      gap: 6px;
+      margin: 18px 0 24px;
+    }
+
+    nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 42px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    nav a:hover,
+    nav a:focus-visible {
+      outline: 2px solid rgba(22, 114, 99, 0.28);
+      background: #fff;
+    }
+
+    .nav-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+      flex: 0 0 auto;
+    }
+
+    .side-note {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    main {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding: 28px;
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      min-width: 0;
+    }
+
+    .title-block {
+      display: grid;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+      white-space: normal;
+      letter-spacing: 0;
+    }
+
+    .title-block h2 {
+      margin: 0;
+      font-size: 42px;
+      line-height: 1.12;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+      overflow-wrap: anywhere;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+      min-width: 0;
+    }
+
+    .button {
+      min-height: 40px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--ink);
+      cursor: pointer;
+      font-weight: 800;
+      box-shadow: 0 2px 8px rgba(24, 38, 33, 0.05);
+      overflow-wrap: anywhere;
+      white-space: normal;
+    }
+
+    .button.primary {
+      border-color: var(--green);
+      background: var(--green);
+      color: #fff;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      outline: 3px solid rgba(45, 95, 145, 0.18);
+    }
+
+    .band {
+      margin: 22px 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow-wrap: anywhere;
+    }
+
+    .band.warning {
+      border-color: #e3b98b;
+      background: #fff8ef;
+    }
+
+    .section {
+      margin: 30px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: end;
+      margin-bottom: 14px;
+    }
+
+    .section-head h3 {
+      margin: 0;
+      font-size: 25px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 680px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 16px;
+      box-shadow: 0 7px 20px rgba(24, 38, 33, 0.05);
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .card h4 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 10px;
+      font-size: 18px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    .index {
+      display: inline-grid;
+      place-items: center;
+      min-width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .card p {
+      margin: 0 0 10px;
+      color: var(--muted);
+    }
+
+    .list {
+      margin: 0;
+      padding-left: 1.15em;
+    }
+
+    .list li + li {
+      margin-top: 5px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 28px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .pill.green {
+      border-color: #b6d9d0;
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .pill.amber {
+      border-color: #eccb9f;
+      background: var(--amber-soft);
+      color: var(--amber);
+    }
+
+    .pill.red {
+      border-color: #e4b5b0;
+      background: var(--red-soft);
+      color: var(--red);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .flow-step {
+      min-height: 118px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      position: relative;
+    }
+
+    .flow-step strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 17px;
+    }
+
+    .flow-step span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-weight: 800;
+    }
+
+    label span {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 10px 12px;
+      resize: vertical;
+    }
+
+    textarea {
+      min-height: 116px;
+    }
+
+    textarea:focus,
+    input[type="text"]:focus {
+      outline: 3px solid rgba(22, 114, 99, 0.18);
+      border-color: var(--green);
+    }
+
+    .checkline {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px solid #edf1ee;
+    }
+
+    .checkline:last-child {
+      border-bottom: 0;
+    }
+
+    .checkline input {
+      width: 18px;
+      height: 18px;
+      margin-top: 4px;
+      accent-color: var(--green);
+      flex: 0 0 auto;
+    }
+
+    .checkline strong {
+      display: block;
+      line-height: 1.4;
+    }
+
+    .checkline small {
+      color: var(--muted);
+    }
+
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .matrix th,
+    .matrix td {
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .matrix th {
+      background: #eef3ef;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .matrix tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .traffic {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      color: #fff;
+      font-weight: 900;
+    }
+
+    .traffic.green {
+      background: var(--green);
+    }
+
+    .traffic.amber {
+      background: var(--amber);
+    }
+
+    .traffic.red {
+      background: var(--red);
+    }
+
+    .output {
+      min-height: 170px;
+      white-space: pre-wrap;
+      color: var(--muted);
+      background: #f8faf8;
+    }
+
+    .footer {
+      color: var(--muted);
+      font-size: 14px;
+      padding: 24px 0 4px;
+    }
+
+    @media (max-width: 960px) {
+      .app-shell {
+        display: block;
+      }
+
+      aside {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .topbar,
+      .section-head {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .actions {
+        justify-content: flex-start;
+        width: 100%;
+      }
+
+      .grid.two,
+      .grid.three,
+      .flow,
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      main {
+        padding: 18px;
+      }
+
+      aside {
+        padding: 18px;
+      }
+
+      nav {
+        grid-template-columns: 1fr;
+      }
+
+      .title-block h2 {
+        font-size: 28px;
+      }
+
+      .lead {
+        font-size: 16px;
+      }
+
+      .actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .eyebrow {
+        display: inline-block;
+      }
+
+      .title-block h2,
+      .lead,
+      .side-note,
+      .band,
+      .card,
+      .flow-step,
+      .matrix th,
+      .matrix td {
+        line-break: anywhere;
+        word-break: break-all;
+      }
+
+      .matrix {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+
+    @media print {
+      aside,
+      .actions,
+      .button {
+        display: none;
+      }
+
+      .app-shell {
+        display: block;
+      }
+
+      main {
+        padding: 0;
+      }
+
+      .card,
+      .band,
+      .flow-step {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside aria-label="工作台導覽">
+      <div class="brand">
+        <small>V0.1 course guide</small>
+        <h1>工作台</h1>
+        <p class="side-note">這一版先把「好理家在可以協助什麼」整理成課程主軸，帶夥伴從自己的需求出發，安全地選工具、看邊界、做示範、產出下一步。</p>
+      </div>
+      <nav>
+        <a href="#purpose"><span class="nav-dot"></span>目的與邊界</a>
+        <a href="#course-axis"><span class="nav-dot"></span>課程主軸</a>
+        <a href="#tool-inventory"><span class="nav-dot"></span>從需求選工具</a>
+        <a href="#flow"><span class="nav-dot"></span>教學路線</a>
+        <a href="#safe-demo"><span class="nav-dot"></span>安全示範</a>
+        <a href="#curriculum"><span class="nav-dot"></span>課綱草案</a>
+        <a href="#collect"><span class="nav-dot"></span>課前材料</a>
+        <a href="#interview"><span class="nav-dot"></span>課中紀錄</a>
+        <a href="#traffic"><span class="nav-dot"></span>紅黃綠燈</a>
+        <a href="#outputs"><span class="nav-dot"></span>下一步產物</a>
+      </nav>
+      <div class="side-note">
+        <strong>使用提醒</strong><br>
+        課程示範只使用內建範例、模擬文字或去識別化材料；不代填表單、不送出申請、不把真實個案資料貼入工具。
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar" id="purpose">
+        <div class="title-block">
+          <span class="eyebrow">士林地檢署心理師 AI 與資訊化課程引導版</span>
+          <h2>好理家在可以協助什麼：從夥伴需求開始的第一堂課</h2>
+          <p class="lead">這份工作台把夥伴提出的五項需求整理成課程主軸，帶大家依需求選擇好理家在工具，理解哪些地方能協助、哪些地方必須人工審核，並用安全示範產出下一步試行清單。</p>
+        </div>
+        <div class="actions">
+          <button class="button primary" type="button" id="copyChecklist">複製課前材料清單</button>
+          <button class="button" type="button" id="buildSummary">產生課程下一步摘要</button>
+          <button class="button" type="button" id="printPage">列印或存 PDF</button>
+        </div>
+      </header>
+
+      <section class="band warning" aria-label="安全邊界">
+        <strong>課程使用邊界：</strong>
+        這裡先回答「只用好理家在可否協助夥伴完成部分任務」，不是建立正式系統。好理家在工具可協助整理、分類、查找、提醒與產出參考內容，但不做診斷、不做法律結論、不給用藥建議、不自動發送關懷訊息。所有輸出都需要人工審核後，才可進入正式紀錄或對外溝通。
+      </section>
+
+      <section class="section" aria-label="夥伴提出的任務">
+        <div class="section-head">
+          <div>
+            <h3>從夥伴提出的任務出發</h3>
+            <p>第一堂課不先介紹所有 AI，而是先回到夥伴已經說出的工作困難。後面的主軸、工具與示範，都用這五項需求來對齊。</p>
+          </div>
+        </div>
+        <div class="grid three">
+          <article class="card">
+            <h4><span class="index">1</span>行政資料與個案紀錄整合</h4>
+            <p>把零散紀錄整理成一致格式，協助追蹤案件狀態、下一步與待確認事項。</p>
+          </article>
+          <article class="card">
+            <h4><span class="index">2</span>行政作業與程序核對</h4>
+            <p>把常見流程拆成 checklist，協助提醒缺漏、期限、文件與審核欄位。</p>
+          </article>
+          <article class="card">
+            <h4><span class="index">3</span>日常紀錄中的關注線索</h4>
+            <p>由專業人員先定義線索，再評估好理家在是否能從去識別化紀錄中整理出需要人工查看的內容。</p>
+          </article>
+          <article class="card">
+            <h4><span class="index">4</span>服藥與回診資訊整理</h4>
+            <p>協助整理目前資訊、忘記或待確認事項，以及回診前可詢問醫師或藥師的問題。</p>
+          </article>
+          <article class="card">
+            <h4><span class="index">5</span>情緒支持與生活建議草稿</h4>
+            <p>產生心理師審核後才可使用的關懷文字、衛教文字與生活支持資源清單。</p>
+          </article>
+          <article class="card">
+            <h4><span class="index">?</span>需要先判斷</h4>
+            <p>每項任務都要先確認資料來源、可否去識別化、誰審核、輸出會回到哪個正式流程。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="course-axis">
+        <div class="section-head">
+          <div>
+            <h3>課程主軸：好理家在可以協助什麼</h3>
+            <p>把工具能力整理成夥伴聽得懂、用得上的五個主軸；每一軸都同時說明可協助的工作、適合的工具，以及不可跨越的安全邊界。</p>
+          </div>
+        </div>
+        <div class="grid three">
+          <article class="card">
+            <h4><span class="index">A</span>把口語與文件變成可整理材料</h4>
+            <p>用語音轉文字、逐字稿/文件上傳與 AI 智能摘要，協助把會談、會議、課後回饋先整理成可審閱的文字材料。</p>
+            <div class="pill-row">
+              <span class="pill green">對應：紀錄整合</span>
+              <span class="pill red">不用真實個資示範</span>
+            </div>
+          </article>
+          <article class="card">
+            <h4><span class="index">B</span>把生活與財務壓力轉成可討論面向</h4>
+            <p>用財務風險快篩、財務焦慮檢測與財務韌性檢測，協助把混亂描述轉成財務、家庭、個人或壓力面向，方便人工討論與追蹤。</p>
+            <div class="pill-row">
+              <span class="pill green">對應：線索整理</span>
+              <span class="pill red">不可診斷化</span>
+            </div>
+          </article>
+          <article class="card">
+            <h4><span class="index">C</span>把資源查找變成可審稿草稿</h4>
+            <p>用問問 AI、知識庫與社工儀表板，先整理可能相關的生活、財務與諮詢資源，再由夥伴確認是否適用、語氣是否合宜。</p>
+            <div class="pill-row">
+              <span class="pill green">對應：生活建議</span>
+              <span class="pill amber">需人工查核</span>
+            </div>
+          </article>
+          <article class="card">
+            <h4><span class="index">D</span>把轉介與求助流程說清楚</h4>
+            <p>用線上諮詢、急難救助與許願池，讓夥伴知道不同入口的用途、需要準備的資料，以及哪些動作會涉及正式轉介或送出。</p>
+            <div class="pill-row">
+              <span class="pill green">對應：資源連結</span>
+              <span class="pill red">不代填送出</span>
+            </div>
+          </article>
+          <article class="card">
+            <h4><span class="index">E</span>把行政與服務追蹤變成固定模板</h4>
+            <p>用社工專區的個案歷程紀要，搭配整理後的文字、表格、檢核清單與工具輸出，形成摘要、待確認事項、下一步與人工審核欄位，減少重工與交接落差。</p>
+            <div class="pill-row">
+              <span class="pill green">對應：程序核對</span>
+              <span class="pill amber">不取代內部系統</span>
+            </div>
+          </article>
+          <article class="card">
+            <h4><span class="index">F</span>把安全邊界做成操作習慣</h4>
+            <p>每次示範都先做去識別化、使用模擬資料、保留人工審核欄位，並把「工具不能做什麼」講得和「工具能做什麼」一樣清楚。</p>
+            <div class="pill-row">
+              <span class="pill green">貫穿全課程</span>
+              <span class="pill red">敏感資料不進工具</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="tool-inventory">
+        <div class="section-head">
+          <div>
+            <h3>從需求選工具：第一階段建議順序</h3>
+            <p>排序依據是夥伴提出的五項訴求：紀錄整合、行政程序核對、日常線索整理、服藥回診資訊整理、情緒支持與生活建議。越前面的工具，越適合放入第一堂課的主要示範。</p>
+          </div>
+        </div>
+        <div class="grid two">
+          <article class="card">
+            <h4><span class="index">1</span>社工專區：個案歷程紀要</h4>
+            <p>最直接對應夥伴提到的行政資料與個案紀錄整合。可用來示範如何把去識別化事件、介入紀錄、待辦與下一步整理成可交接的歷程摘要。</p>
+            <ul class="list">
+              <li>對應訴求：行政資料與個案紀錄整合、日常紀錄整理、服務追蹤與交接。</li>
+              <li>課程用法：用模擬紀錄示範「事件、處遇、待確認、下一步」如何整理進歷程脈絡。</li>
+              <li>邊界：不貼真實姓名、案號、地址、醫療細節或可識別內容；也不取代士林地檢署內部正式紀錄系統。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill green">最高關聯</span>
+              <span class="pill red">只用去識別化示範</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h4><span class="index">2</span>語音轉文字工具</h4>
+            <p>最可能成為日常工具。登入後確認可上傳影音檔，也可上傳逐字稿與文件，並有文字編輯區與 AI 智能摘要。</p>
+            <ul class="list">
+              <li>對應訴求：行政資料與個案紀錄整合、行政會議整理、課後回饋整理。</li>
+              <li>已確認操作：支援搜尋既有逐字稿標題、上傳逐字稿/文件、開始錄音、上傳影音檔；影音上傳支援多種音訊與影片格式。</li>
+              <li>已確認邊界：隱私說明寫明錄音轉完即刪、逐字稿保存在帳號、錄音不作模型訓練或行銷用途。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill green">最高使用機率</span>
+              <span class="pill green">登入後已確認</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h4><span class="index">3</span>問問 AI、知識庫與社工儀表板</h4>
+            <p>最適合做成工作中的查找入口。登入後確認有社工儀表板、AI 智能搜尋、文章關鍵字搜尋、分類、熱門搜尋與問問 AI 側欄。</p>
+            <ul class="list">
+              <li>對應訴求：情緒支持與生活建議草稿、資源清單、行政流程說明。</li>
+              <li>已確認操作：知識庫可用 AI 問題搜尋、標題關鍵字搜尋、一般民眾/社工篩選、分頁與知識分類。</li>
+              <li>已確認邊界：問問 AI 側欄有新對話、歷史對話、檔案上傳、文字輸入與語音輸入；課程示範不點歷史對話、不上傳個案資料。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill green">高頻查找</span>
+              <span class="pill green">登入後已確認</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h4><span class="index">4</span>財務風險快篩</h4>
+            <p>最接近夥伴提出的「依據日常紀錄整理需要關注的線索」。登入後用內建案例試跑，已確認可產出結構化風險結果。</p>
+            <ul class="list">
+              <li>對應訴求：日常紀錄中的關注線索、個案紀錄整合、資源需求初步分類。</li>
+              <li>已確認操作：至少 100 字；建議輸入背景、收入、支出、負債、資產/緩衝與近期事件；可選案例範本、匯入語音紀錄、看歷史紀錄。</li>
+              <li>已確認輸出：分財務、家庭、個人三個角度；共九個評估項目，每項有結果與分數，並產出總分、風險等級與完成時間。</li>
+              <li>可用產物：重新評估、輸出完整報告、下載圖表、複製表格、下載原始資料；正式使用仍需人工審核。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill green">登入後已確認</span>
+              <span class="pill green">模擬試跑已確認</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h4><span class="index">5</span>線上諮詢、急難救助與許願池</h4>
+            <p>當夥伴發現個案需要財務或生活資源協助時，這類入口最容易接到「下一步可以去哪裡」的問題；但也最牽涉正式轉介與個資。</p>
+            <ul class="list">
+              <li>對應訴求：生活建議、資源連結、後續轉介與服務說明。</li>
+              <li>已確認操作：線上諮詢分個人線上諮詢、社工轉介諮詢、社工專業諮詢；社工專業諮詢可填單位、諮詢主題、問題描述與上傳文件。</li>
+              <li>已確認邊界：急難救助有協助者轉介表單，需個案聯絡資料、急難情況、可諮詢時間、轉介者資料與告知同意；課程只能說明流程，不代填。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill green">登入後已確認</span>
+              <span class="pill red">不可代填送出</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h4><span class="index">6</span>財務焦慮檢測</h4>
+            <p>適合用在課程示範或會談前後的壓力語言整理，協助把「我覺得很亂」轉成比較可討論的壓力面向。</p>
+            <ul class="list">
+              <li>對應訴求：情緒支持草稿、生活建議、壓力狀態初步整理。</li>
+              <li>為什麼排第六：心理師會理解壓力語言，但測驗型工具不一定每次都需要。</li>
+              <li>邊界：不可作為臨床診斷、人格分類或心理專業結論。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill green">適合示範</span>
+              <span class="pill red">不可診斷化</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h4><span class="index">7</span>財務韌性檢測</h4>
+            <p>適合用來看見生活目前撐不撐得住，幫助夥伴把資源需求、支撐點與生活壓力先整理出輪廓。</p>
+            <ul class="list">
+              <li>對應訴求：生活壓力初整理、資源需求討論、生活建議草稿。</li>
+              <li>為什麼排第七：對資源盤點有幫助，但和行政資料整理的直接關聯較低。</li>
+              <li>邊界：結果是自我覺察與討論材料，不是財務建議或風險結論。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill green">可示範</span>
+              <span class="pill amber">不作專業結論</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h4><span class="index">8</span>生活試算模擬器與財務生活記帳助理</h4>
+            <p>適合當個案已經願意整理收支、支出、債務或權益試算時使用。第一堂課先以公開工具箱示範，不把真實帳務資料放進工具。</p>
+            <ul class="list">
+              <li>對應訴求：收支資料整理、生活建議、債務或支出初步盤點。</li>
+              <li>已確認操作：公開工具包含記帳助理、財務月報、債務盤點、財務健康儀表板、夢想規劃、債務/貸款/勞動權益試算等。</li>
+              <li>邊界：不輸入真實個資或帳務截圖示範；若要處理資料，需先確認資料政策與保存位置。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill amber">情境式使用</span>
+              <span class="pill amber">以公開工具示範</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h4><span class="index">9</span>詐騙防禦能力檢測</h4>
+            <p>適合作為特定主題的衛教或課程暖身，特別是個案與家屬有詐騙風險、衝動決策或生活風險教育需求時。</p>
+            <ul class="list">
+              <li>對應訴求：生活風險教育、個案衛教材料、家庭討論或課程暖身。</li>
+              <li>為什麼排第九：很有教育價值，但比起紀錄整理、資源查找與線索整理，使用情境較特定。</li>
+              <li>邊界：檢測結果是教育與覺察素材，不作為案件風險評定或正式紀錄判斷。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill amber">主題式使用</span>
+              <span class="pill red">不可風險定性</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="flow">
+        <div class="section-head">
+          <div>
+            <h3>教學引導路線</h3>
+            <p>課程節奏先從夥伴自己的需求開始，再進入工具示範與邊界討論，最後收斂成可以帶回去試行的下一步。</p>
+          </div>
+        </div>
+        <div class="flow">
+          <div class="flow-step">
+            <strong>1. 對焦需求</strong>
+            <span>先確認夥伴最想改善的是紀錄、程序、線索、回診資訊，還是生活支持草稿。</span>
+          </div>
+          <div class="flow-step">
+            <strong>2. 選最小示範</strong>
+            <span>挑一個低風險、常重複、有固定格式的任務，不用真實個案先跑一次。</span>
+          </div>
+          <div class="flow-step">
+            <strong>3. 打開對應工具</strong>
+            <span>依需求選個案歷程紀要、語音轉文字、問問 AI/知識庫、財務風險快篩、諮詢或急難入口。</span>
+          </div>
+          <div class="flow-step">
+            <strong>4. 用安全材料</strong>
+            <span>只使用內建範例、模擬文字或去識別化材料；先看工具怎麼整理，不送出資料。</span>
+          </div>
+          <div class="flow-step">
+            <strong>5. 看輸出與邊界</strong>
+            <span>一起判斷哪些可以直接當草稿，哪些需要人工查核，哪些第一階段暫不做。</span>
+          </div>
+          <div class="flow-step">
+            <strong>6. 產出下一步</strong>
+            <span>整理成課後可帶走的安全規則卡、工具對照表、示範腳本與兩週試行紀錄。</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="safe-demo">
+        <div class="section-head">
+          <div>
+            <h3>安全示範安排</h3>
+            <p>示範重點不是追求工具一次做到全部，而是讓夥伴看見：輸入什麼、工具做了什麼、人工要審什麼、哪些動作不能做。</p>
+          </div>
+        </div>
+        <div class="grid two">
+          <article class="card">
+            <h4><span class="index">1</span>個案歷程與語音/逐字稿整理示範</h4>
+            <p>用一段模擬紀錄或會議文字，示範如何整理成個案歷程脈絡、摘要、待辦、待確認事項與可交接格式。</p>
+            <ul class="list">
+              <li>使用工具：社工專區個案歷程紀要、語音轉文字、上傳逐字稿與文件、AI 智能摘要。</li>
+              <li>看邊界：不使用真實錄音、不貼姓名案號、不把工具摘要直接回寫正式紀錄。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h4><span class="index">2</span>財務風險快篩示範</h4>
+            <p>用內建案例或模擬材料，示範工具如何把描述整理成財務、家庭、個人三個角度與九個評估項目。</p>
+            <ul class="list">
+              <li>使用工具：財務風險快篩、案例範本、結果表格或圖表輸出。</li>
+              <li>看邊界：結果只作討論材料，不當成心理、醫療、法律或案件風險結論。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h4><span class="index">3</span>知識庫與問問 AI 示範</h4>
+            <p>用概括問題示範如何查找資源、整理草稿，再由夥伴判斷內容是否符合服務情境與語氣。</p>
+            <ul class="list">
+              <li>使用工具：社工儀表板、知識庫、問問 AI。</li>
+              <li>看邊界：不打開歷史對話、不上傳個案文件、不把查找結果視為已完成查核。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h4><span class="index">4</span>轉介與求助入口導覽</h4>
+            <p>只示範線上諮詢、急難救助與許願池的入口差異、欄位類型與需要事先取得的同意。</p>
+            <ul class="list">
+              <li>使用工具：線上諮詢、急難救助、許願池。</li>
+              <li>看邊界：不代填、不送出、不上傳佐證文件；正式轉介需依單位規範與告知同意。</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="curriculum">
+        <div class="section-head">
+          <div>
+            <h3>第一版課綱草案</h3>
+            <p>依照先前課綱建議的格式，先整理為兩堂課，每堂約 3 小時。正式名稱、日期、講師與參與人數可再確認後補上。</p>
+          </div>
+        </div>
+        <div class="band">
+          <p><strong>課程目標：</strong>讓夥伴理解好理家在可協助的工作範圍，學會用去識別化材料操作個案歷程紀要、語音轉文字、知識庫/問問 AI、財務風險快篩與轉介入口，並帶走一個可安全試行的兩週工作流。</p>
+        </div>
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th>第一堂時間</th>
+              <th>課程主軸</th>
+              <th>內容簡述</th>
+              <th>器材/工具</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>00:00-00:20</td>
+              <td>開場與需求對焦</td>
+              <td>回到夥伴提出的五項需求，確認今天不是學全部 AI，而是判斷好理家在能協助哪一段工作。</td>
+              <td>PPT、白板、需求卡</td>
+            </tr>
+            <tr>
+              <td>00:20-00:45</td>
+              <td>好理家在可以協助什麼</td>
+              <td>說明五個課程主軸：口語/文件整理、生活與財務壓力整理、資源查找草稿、轉介流程、行政與服務追蹤模板。</td>
+              <td>工作台頁面、工具對照表</td>
+            </tr>
+            <tr>
+              <td>00:45-01:25</td>
+              <td>個案歷程紀要與紀錄整理</td>
+              <td>用模擬紀錄示範如何整理事件、介入、待確認事項與下一步；搭配語音轉文字或逐字稿摘要。</td>
+              <td>好理家在、模擬紀錄、去識別化規則卡</td>
+            </tr>
+            <tr>
+              <td>01:25-01:35</td>
+              <td>休息</td>
+              <td>整理剛剛看到的可用處與不可用處。</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>01:35-02:10</td>
+              <td>知識庫、問問 AI 與社工儀表板</td>
+              <td>用概括問題查找資源，練習把工具輸出改成可審稿草稿，而不是直接給個案的結論。</td>
+              <td>好理家在、示範問題、審稿清單</td>
+            </tr>
+            <tr>
+              <td>02:10-02:45</td>
+              <td>財務風險快篩安全示範</td>
+              <td>使用內建或模擬案例觀察三個角度、九個評估項目與分數；討論結果如何作為人工討論材料。</td>
+              <td>財務風險快篩、內建案例、紅黃綠燈表</td>
+            </tr>
+            <tr>
+              <td>02:45-03:00</td>
+              <td>第一堂收斂</td>
+              <td>選出一個低風險、常重複、有固定格式的課後小試行任務。</td>
+              <td>兩週小試行紀錄表</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="matrix" style="margin-top: 14px;">
+          <thead>
+            <tr>
+              <th>第二堂時間</th>
+              <th>課程主軸</th>
+              <th>內容簡述</th>
+              <th>器材/工具</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>00:00-00:20</td>
+              <td>回顧與試行任務確認</td>
+              <td>回顧第一堂工具邊界，確認第二堂要設計哪一段工作流。</td>
+              <td>第一堂摘要、試行任務卡</td>
+            </tr>
+            <tr>
+              <td>00:20-00:55</td>
+              <td>個案歷程紀要工作流設計</td>
+              <td>拆解輸入、整理、審核、回到正式紀錄的流程，標註哪些欄位可由好理家在協助，哪些要人工決定。</td>
+              <td>流程圖、欄位清單、模擬紀錄</td>
+            </tr>
+            <tr>
+              <td>00:55-01:25</td>
+              <td>行政檢核與交接模板</td>
+              <td>把常漏步驟變成 checklist，練習產出摘要、待辦、待確認與交接欄位。</td>
+              <td>空白表單、工作台、白板</td>
+            </tr>
+            <tr>
+              <td>01:25-01:35</td>
+              <td>休息</td>
+              <td>整理流程中的風險點與需要主管確認的事項。</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>01:35-02:10</td>
+              <td>安全邊界與人工審核</td>
+              <td>建立紅黃綠燈規則：可直接整理、需人工審核、第一階段不做；特別處理用藥、病情、法律結論與真實個資。</td>
+              <td>紅黃綠燈表、安全規則卡</td>
+            </tr>
+            <tr>
+              <td>02:10-02:40</td>
+              <td>轉介與求助入口導覽</td>
+              <td>看線上諮詢、急難救助與許願池的入口差異，只說明流程、資料需求與告知同意，不代填或送出。</td>
+              <td>好理家在、流程示意、資料需求清單</td>
+            </tr>
+            <tr>
+              <td>02:40-03:00</td>
+              <td>兩週小試行設計</td>
+              <td>完成試行紀錄表：使用工具、輸入材料類型、人工修正、節省時間、安全疑慮與下一版課綱建議。</td>
+              <td>兩週小試行紀錄表、回饋表</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="collect">
+        <div class="section-head">
+          <div>
+            <h3>課前要帶來的材料（全部去識別化）</h3>
+            <p>這些材料不是要蒐集真實個案，而是為了讓課程示範貼近夥伴日常工作：看得到格式、流程、常見卡點與安全紅線。</p>
+          </div>
+        </div>
+        <div class="grid two">
+          <article class="card">
+            <h4><span class="index">01</span>工作流程現況</h4>
+            <p>看一個服務或任務從開始到結束如何移動，方便課中挑出最小安全示範。</p>
+            <ul class="list">
+              <li>進案、初評、服務安排、追蹤、轉介、結案步驟。</li>
+              <li>每一階段負責人、資料位置、常見卡點。</li>
+              <li>最常重複、最怕漏、最難交接的工作。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill green">可蒐集：流程圖</span>
+              <span class="pill amber">需確認：角色權責</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h4><span class="index">02</span>文件與資料格式</h4>
+            <p>確認目前資料長什麼樣，才知道示範時可以用哪種格式，以及哪些資料不能進工具。</p>
+            <ul class="list">
+              <li>Word、Excel、紙本、內部系統欄位範例。</li>
+              <li>會談、團體、轉介、追蹤、結案紀錄格式。</li>
+              <li>哪些欄位必填，哪些只是慣例。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill green">可蒐集：空白表單</span>
+              <span class="pill red">不要帶：真實個資</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h4><span class="index">03</span>行政程序與檢核規則</h4>
+            <p>把最容易漏的流程拆成檢核點，課中可示範如何變成待辦與審核欄位。</p>
+            <ul class="list">
+              <li>初次接觸前準備、轉介資料檢查、活動前後資料整理。</li>
+              <li>期限、審核、通知、留存、回報要求。</li>
+              <li>過去最常發生的漏項或重工。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill green">可蒐集：步驟清單</span>
+              <span class="pill amber">需確認：法定程序</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h4><span class="index">04</span>需人工關注線索</h4>
+            <p>把「病情起伏預警」改成較安全的線索整理，重點是提醒人工查看，不是讓工具判斷。</p>
+            <ul class="list">
+              <li>心理師平常會提高注意的文字、行為、缺席或失聯訊號。</li>
+              <li>一般觀察、需追蹤、需啟動既有流程的差異。</li>
+              <li>匿名例句與判斷理由。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill green">可蒐集：匿名例句</span>
+              <span class="pill red">不要做：工具診斷</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h4><span class="index">05</span>服藥與回診資訊邊界</h4>
+            <p>確認心理師在服藥管理裡能做什麼、不能做什麼。</p>
+            <ul class="list">
+              <li>目前誰提醒回診、誰整理藥名、誰處理副作用疑慮。</li>
+              <li>可整理的問題：忘記藥名、回診時間、要問醫師的問題。</li>
+              <li>不可由工具回答：停藥、換藥、劑量、交互作用。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill green">可蒐集：回診前問題</span>
+              <span class="pill red">不要做：醫療建議</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h4><span class="index">06</span>情緒支持與生活建議語氣</h4>
+            <p>蒐集已被團隊認可的關懷語氣，而不是讓工具自由產生安慰文字。</p>
+            <ul class="list">
+              <li>平常怎麼寫關懷訊息、衛教文字、資源提醒。</li>
+              <li>哪些說法安全，哪些說法會讓人感到被責備或監控。</li>
+              <li>何時應改成電話、面談或既有危機流程。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill green">可蒐集：安全語句</span>
+              <span class="pill red">不要做：自動發送</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h4><span class="index">07</span>資料安全與使用規範</h4>
+            <p>先確認哪些資料可以被拿來練習，哪些完全不能進好理家在工具或任何外部工具。</p>
+            <ul class="list">
+              <li>單位是否允許使用好理家在網站工具。</li>
+              <li>去識別化標準與審核人。</li>
+              <li>工具產出是否能進正式紀錄，或只能作為草稿。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill amber">需確認：內規</span>
+              <span class="pill red">不要帶：敏感個資</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h4><span class="index">08</span>成效與失敗經驗</h4>
+            <p>先知道現在花多少時間、常錯在哪裡，才知道好理家在是否真的有幫忙。</p>
+            <ul class="list">
+              <li>一份紀錄整理平均花多久。</li>
+              <li>行政檢核最常漏什麼。</li>
+              <li>交接時最常看不懂什麼。</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill green">可蒐集：時間估計</span>
+              <span class="pill amber">需確認：成功指標</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="interview">
+        <div class="section-head">
+          <div>
+            <h3>課中討論紀錄區</h3>
+            <p>這裡可以在課程中即時記錄，幫助大家把「想改善什麼」收斂成可安全示範、可課後試行的工作項目。</p>
+          </div>
+        </div>
+        <div class="band">
+          <div class="field-grid">
+            <label>
+              服務情境與任務類型
+              <span>例如：被害人、家屬、受保護管束人、更生保護、修復式司法當事人，或混合。</span>
+              <textarea data-save="audience" placeholder="請用概括描述，不輸入姓名、案號或可識別細節。"></textarea>
+            </label>
+            <label>
+              最想先改善的三件工作
+              <span>請聚焦重複、漏項、重工、難交接、難追蹤。</span>
+              <textarea data-save="painPoints" placeholder="例：會談後摘要重整很花時間；跨單位轉介資料常缺欄位。"></textarea>
+            </label>
+            <label>
+              可示範材料格式
+              <span>Word、Excel、紙本、內部系統、LINE、Email，請描述格式，不貼入真實內容。</span>
+              <textarea data-save="formats" placeholder="例：追蹤紀錄在 Word；行政清單在 Excel；正式資料在內部系統。"></textarea>
+            </label>
+            <label>
+              安全紅線
+              <span>先把紅線列清楚，後續才知道哪些資料可以進好理家在、哪些只能人工處理。</span>
+              <textarea data-save="redLines" placeholder="例：姓名、案號、地址、身分證、醫療細節、未成年人識別資訊。"></textarea>
+            </label>
+            <label>
+              第一個課後小試行
+              <span>建議選低風險、常重複、有明確格式的流程。</span>
+              <textarea data-save="pilot" placeholder="例：去識別化追蹤紀錄整理成摘要與下次待辦。"></textarea>
+            </label>
+            <label>
+              需要主管或資安確認事項
+              <span>列出課前需要先問清楚的權限、內規、審核或資料留存問題。</span>
+              <textarea data-save="approval" placeholder="例：是否可使用好理家在；工具結果能否進正式紀錄；誰審核。"></textarea>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="traffic">
+        <div class="section-head">
+          <div>
+            <h3>工具使用邊界紅黃綠燈</h3>
+            <p>課程中用這張表快速判斷：哪些可以直接練習，哪些要加人工審核，哪些第一階段只講風險、不做示範。</p>
+          </div>
+        </div>
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th>等級</th>
+              <th>可以如何理解</th>
+              <th>例子</th>
+              <th>課程處理方式</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="traffic green">G</span></td>
+              <td>低風險整理工作，可以優先做。</td>
+              <td>去識別化摘要、時間軸、待辦、行政 checklist、格式整理。</td>
+              <td>可放入第一堂課模板與練習。</td>
+            </tr>
+            <tr>
+              <td><span class="traffic amber">Y</span></td>
+              <td>需要人工定義規則與審核。</td>
+              <td>需人工關注線索、回診前問題整理、關懷文字草稿。</td>
+              <td>可示範草稿，但必須附原始依據、審核欄位與禁止自動發送提醒。</td>
+            </tr>
+            <tr>
+              <td><span class="traffic red">R</span></td>
+              <td>第一階段暫不做。</td>
+              <td>工具診斷、病情分級、用藥建議、法律結論、真實敏感個資上傳。</td>
+              <td>只列為風險邊界，不做功能設計。</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="outputs">
+        <div class="section-head">
+          <div>
+            <h3>課後帶走的下一步產物</h3>
+            <p>課程最後不只停在看工具，而是把示範收斂成四個可帶回去討論、試行與修正的產物。</p>
+          </div>
+        </div>
+        <div class="grid two">
+          <article class="card">
+            <h4><span class="index">A</span>安全使用規則卡</h4>
+            <div class="checkline">
+              <input type="checkbox" data-save="outA1">
+              <div><strong>定義不可輸入資料</strong><small>姓名、案號、地址、身分證、醫療細節等。</small></div>
+            </div>
+            <div class="checkline">
+              <input type="checkbox" data-save="outA2">
+              <div><strong>定義示範資料替換方式</strong><small>例如 A 案、家屬甲、某醫療院所。</small></div>
+            </div>
+          </article>
+          <article class="card">
+            <h4><span class="index">B</span>需求到工具對照表</h4>
+            <div class="checkline">
+              <input type="checkbox" data-save="outB1">
+              <div><strong>五項需求對應工具</strong><small>標註可用個案歷程紀要、語音轉文字、問問 AI、知識庫、財務風險快篩或諮詢入口。</small></div>
+            </div>
+            <div class="checkline">
+              <input type="checkbox" data-save="outB2">
+              <div><strong>每項工具的人工審核點</strong><small>把可直接使用、需查核、不可使用的地方分開。</small></div>
+            </div>
+          </article>
+          <article class="card">
+            <h4><span class="index">C</span>安全示範流程腳本</h4>
+            <div class="checkline">
+              <input type="checkbox" data-save="outC1">
+              <div><strong>個案歷程、語音與文件摘要示範</strong><small>用模擬材料示範歷程脈絡、摘要、待辦與待確認事項。</small></div>
+            </div>
+            <div class="checkline">
+              <input type="checkbox" data-save="outC2">
+              <div><strong>風險快篩與知識查找示範</strong><small>示範看結果、問邊界、列人工審核問題。</small></div>
+            </div>
+          </article>
+          <article class="card">
+            <h4><span class="index">D</span>兩週小試行紀錄表</h4>
+            <div class="checkline">
+              <input type="checkbox" data-save="outD1">
+              <div><strong>每次試行記錄</strong><small>記錄使用工具、輸入材料類型、輸出結果、人工修正內容。</small></div>
+            </div>
+            <div class="checkline">
+              <input type="checkbox" data-save="outD2">
+              <div><strong>改善與是否擴大使用</strong><small>判斷是否省時、是否安全、是否值得進入下一版課綱。</small></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h3>課程下一步摘要輸出</h3>
+            <p>按下「產生課程下一步摘要」後，會把已填欄位整理成需求、可用工具、安全邊界、示範安排與課後試行清單。資料只在這個頁面本機處理，不會送出。</p>
+          </div>
+        </div>
+        <textarea id="summaryOutput" class="output" readonly placeholder="尚未產生摘要。"></textarea>
+      </section>
+
+      <footer class="footer">
+        工作台 V0.1。用途：把「好理家在可以協助什麼」整理成課程引導，協助夥伴從需求選工具、看邊界、做安全示範並產出下一步。邊界：不輸入真實可識別個資，不接內部系統，不做診斷或醫療/法律建議。
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const storagePrefix = "slc-ai-workbench-v01:";
+    const inputs = document.querySelectorAll("[data-save]");
+
+    inputs.forEach((input) => {
+      const key = storagePrefix + input.dataset.save;
+      const saved = localStorage.getItem(key);
+      if (saved !== null) {
+        if (input.type === "checkbox") input.checked = saved === "true";
+        else input.value = saved;
+      }
+      input.addEventListener("input", () => {
+        localStorage.setItem(key, input.type === "checkbox" ? String(input.checked) : input.value);
+      });
+      input.addEventListener("change", () => {
+        localStorage.setItem(key, input.type === "checkbox" ? String(input.checked) : input.value);
+      });
+    });
+
+    const checklistText = `好理家在課程課前材料清單（全部去識別化）：
+1. 夥伴最想改善的任務：紀錄整合、程序核對、關注線索、回診資訊或生活支持草稿。
+2. 可示範材料格式：空白表單、欄位範例、模擬逐字稿、模擬追蹤紀錄、模擬個案歷程。
+3. 行政程序與檢核規則：常見流程、期限、審核、留存、容易漏的步驟。
+4. 需人工關注線索：匿名例句、一般觀察/需追蹤/需啟動既有流程的區分。
+5. 服藥與回診資訊邊界：可整理資訊、不可由工具回答的醫療問題。
+6. 情緒支持與生活建議語氣：安全關懷語句、禁用說法、危機轉接界線。
+7. 資料安全規範：不可輸入資料、去識別化標準、審核人。
+8. 課後小試行基準：目前花費時間、常見漏項、重工與交接困難。`;
+
+    document.getElementById("copyChecklist").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(checklistText);
+        alert("已複製課前材料清單。");
+      } catch (error) {
+        document.getElementById("summaryOutput").value = checklistText;
+      }
+    });
+
+    document.getElementById("buildSummary").addEventListener("click", () => {
+      const get = (name) => document.querySelector(`[data-save="${name}"]`)?.value.trim() || "尚未填寫";
+      const checked = Array.from(document.querySelectorAll('input[type="checkbox"][data-save]:checked'))
+        .map((item) => item.closest(".checkline")?.querySelector("strong")?.textContent.trim())
+        .filter(Boolean);
+
+      const summary = `工作台 V0.1 課程下一步摘要
+
+課程主軸：
+把「好理家在可以協助什麼」整理成五個學習軸線：個案歷程與口語/文件整理、生活與財務壓力整理、資源查找草稿、轉介與求助流程、行政與服務追蹤模板；全程以安全邊界與人工審核為共同原則。
+
+服務情境與任務類型：
+${get("audience")}
+
+最想先改善的三件工作：
+${get("painPoints")}
+
+可示範材料格式：
+${get("formats")}
+
+安全紅線：
+${get("redLines")}
+
+第一個課後小試行：
+${get("pilot")}
+
+需要主管或資安確認事項：
+${get("approval")}
+
+已勾選的課後產物項目：
+${checked.length ? checked.map((item) => "- " + item).join("\\n") : "尚未勾選"}
+
+建議工具順序：
+- 先示範社工專區個案歷程紀要與語音轉文字，協助把模擬紀錄、口語、逐字稿或文件整理成歷程脈絡、摘要、待辦與待確認事項。
+- 再示範問問 AI、知識庫與社工儀表板，協助把資源查找變成可審稿草稿。
+- 接著示範財務風險快篩，使用內建或模擬案例看三個角度、九個評估項目、分數與邊界。
+- 最後導覽線上諮詢、急難救助與許願池，只看流程與欄位，不代填、不送出。
+
+安全示範安排：
+- 示範一：個案歷程紀要與語音/逐字稿整理，使用模擬材料，不貼姓名、案號或可識別資訊。
+- 示範二：財務風險快篩，使用內建案例或模擬描述，結果只作討論材料。
+- 示範三：知識庫與問問 AI，使用概括問題，輸出需人工查核。
+- 示範四：轉介與求助入口導覽，只說明流程、資料需求與告知同意。
+
+課後下一步：
+- 完成安全使用規則卡與需求到工具對照表。
+- 選一個低風險、常重複、有固定格式的任務做兩週小試行。
+- 每次試行記錄工具做了什麼、人工修正了什麼、是否省時、是否安全。
+- 試行後再決定下一版課綱要加深哪個工具與哪個工作流程。`;
+
+      document.getElementById("summaryOutput").value = summary;
+    });
+
+    document.getElementById("printPage").addEventListener("click", () => {
+      window.print();
+    });
+  </script>
+</body>
+</html>
