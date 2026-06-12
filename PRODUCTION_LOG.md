@@ -1,5 +1,17 @@
 # Production Log
 
+## 2026-06-12 Update 4
+
+- Revised the course outline after Kevin's clarification:
+  - Day 1 keeps 手機錄音、語音轉文字、個案歷程紀要、時間資源盤點、知識庫 / 問問 AI / 社工儀表板.
+  - Day 2 now focuses on 既有自我檢測, 自我檢測結果讀法, 心理相關自我檢測共創可能, and resource connection.
+- Removed the unused quick-screen course segment from the page, copy output, Markdown outline, and Word download because it is not part of this course version.
+- Revised 時間資源盤點 wording to only describe confirmed behavior from the referenced tool: 新增一段時間, 日期/時段, 活動內容, 今日 24 小時盤點, 已記錄時數, 可補充時間, 最近紀錄.
+- Regenerated `shilin-familyfin-two-day-course-outline-v0.1.docx`; structural DOCX check passed with 2 tables, row counts `[7, 8]`.
+- Render-to-PNG visual QA still could not run because LibreOffice/soffice is unavailable in this environment; structural DOCX checks were used instead.
+- Local human-like check passed on the packaged HTML: curriculum section showed the revised self-check course, copy button showed success, Word file existed, and mobile viewport had no horizontal overflow.
+- Search posture preserved: HTML meta robots, `robots.txt`, and Vercel `X-Robots-Tag` should remain noindex for review-stage sharing.
+
 ## 2026-06-12 Update 3
 
 - Added curriculum-section actions in the top-right of `第一版課綱草案`:

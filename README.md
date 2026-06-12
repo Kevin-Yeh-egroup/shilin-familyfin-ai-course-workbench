@@ -6,6 +6,7 @@
 
 - `index.html`：工作台教學引導頁。
 - `course-outline-v0.1.md`：兩堂課、每堂約 3 小時的第一版課綱草稿。
+- `shilin-familyfin-two-day-course-outline-v0.1.docx`：頁面右上角下載用的 Word 課綱。
 - `robots.txt` 與 `vercel.json`：公開可連結，但保留 review-stage noindex 設定。
 
 ## 邊界
