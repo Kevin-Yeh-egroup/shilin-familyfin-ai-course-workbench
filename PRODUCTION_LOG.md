@@ -1,5 +1,14 @@
 # Production Log
 
+## 2026-06-12 Update 2
+
+- Swapped `時間盤點工具` with `知識庫、問問 AI 與社工儀表板` in the two-session outline.
+- Promoted the time audit tool into Day 1 and framed it as a core support for 用藥管理 and 服務追蹤管理.
+- Moved `知識庫、問問 AI 與社工儀表板` into Day 2 as the resource-search and review-draft step.
+- Added mobile recording basics to `語音轉文字`: how to record, how to find the audio file in the phone recording/files app, and how to use only simulated audio for class.
+- Reviewed and aligned course axes, tool ranking, safe demos, pre-course materials, traffic-light boundaries, output artifacts, and generated summary copy.
+- Search posture preserved: HTML meta robots, `robots.txt`, and Vercel `X-Robots-Tag` should remain noindex for review-stage sharing.
+
 ## 2026-06-12 Update
 
 - Removed the course-boundary paragraph Kevin asked to delete from the teaching page.
