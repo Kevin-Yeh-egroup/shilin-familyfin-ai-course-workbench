@@ -8,6 +8,7 @@
   - Day 1: 語音轉文字、個案歷程紀要、知識庫、問問 AI 與社工儀表板。
   - Day 2: 個案歷程紀要工作流、時間盤點工具概念、免費財務諮詢、急難專區。
 - Synced `course-outline-v0.1.md` with the same two-session structure.
+- Added an empty data favicon link to avoid browser `/favicon.ico` 404 noise during QA.
 - Search posture preserved: HTML meta robots, `robots.txt`, and Vercel `X-Robots-Tag` should remain noindex for review-stage sharing.
 
 ## 2026-06-12
